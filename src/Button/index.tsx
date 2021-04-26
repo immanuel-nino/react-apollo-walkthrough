@@ -1,47 +1,52 @@
-import * as React from 'react';
+import * as React from "react";
 
-import './style.css';
+import "./style.css";
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement>{
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   // customclassname: string,
-  color?: 'black' | 'white' | 'salmon',
-  type?: 'button' | 'submit',
+  color?: "black" | "white" | "salmon";
+  type?: "button" | "submit";
 }
 
 class Button extends React.Component<ButtonProps> {
-
   static defaultProps: Partial<ButtonProps> = {
-    color: 'salmon',
-    type: 'button'
-  }
+    color: "salmon",
+    type: "button",
+  };
 
   public render() {
-    const { className, color, type, children, ...rest } = this.props
+    const { className, color, type, children, ...rest } = this.props;
     return (
       <button
         {...rest}
         className={`${className} Button Button_${color}`}
-        type={type}>
+        type={type}
+      >
         {children}
       </button>
-    )
+    );
   }
 }
 
-interface ButtonUnobtrusiveProps extends React.HTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode,
-  type: string,
+interface ButtonUnobtrusiveProps
+  extends React.HTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  type: "button" | "submit";
 }
 
 class ButtonUnobtrusive extends React.Component<ButtonUnobtrusiveProps> {
-  
   render() {
-    const { className, type, children, onMouseOver, ...rest } = this.props
-    return (<button
-      {...rest}
-      className={`${className} Button_unobtrusive`} type={type} onMouseOver={onMouseOver}>
-      {children}
-    </button>)
+    const { className, type, children, onMouseOver, ...rest } = this.props;
+    return (
+      <button
+        {...rest}
+        className={`${className} Button_unobtrusive`}
+        type={type}
+        onMouseOver={onMouseOver}
+      >
+        {children}
+      </button>
+    );
   }
 }
 
@@ -67,7 +72,7 @@ export { ButtonUnobtrusive };
 // const Button = ( props: Partial<ButtonProps> = { color: 'salmon', type: 'button'}) => (
 //   <button
 //     className={`${props.customClassName} Button Button_${props.color}`}
-//     type={props.type} 
+//     type={props.type}
 //     {...props}>
 //     {props.children}
 //   </button>

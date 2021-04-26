@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { ApolloLink } from 'apollo-link'
-import { HttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error'
+import { ApolloClient, HttpLink, InMemoryCache, ApolloLink, ApolloProvider } from '@apollo/client';
+// import {  } from 'apollo-link'
+// import {  } from 'apollo-link-http';
+// import {  } from 'apollo-cache-inmemory';
+import { onError } from '@apollo/link-error'
 
 import App from './App'
 

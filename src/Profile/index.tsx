@@ -1,11 +1,17 @@
-import * as React from 'react';
-import gql from 'graphql-tag';
-import { Query, graphql, QueryResult } from 'react-apollo'
-import ErrorMessage from '../Error'
-import Loading from '../Loading'
-import RepositoryList from '../Repository'
-import { GetRepositories } from '../__generated__/types'
-import { GET_REPOSITORIES_OF_CURRENT_USER } from '../queries'
+import * as React from "react";
+import gql from "graphql-tag";
+// import { Query, graphql, QueryResult } from "react-apollo";
+import ErrorMessage from "../Error";
+import Loading from "../Loading";
+import RepositoryList from "../Repository";
+import {
+  GetRepositories,
+  GetRepositoriesOfOrganization,
+  GetRepositoriesOfOrganizationVariables,
+  GetRepositoriesVariables,
+} from "../__generated__/types";
+import { GET_REPOSITORIES_OF_CURRENT_USER } from "../queries.graphql";
+import { useQuery } from "@apollo/client";
 
 const GET_CURRENT_USER = gql`
   {
@@ -17,24 +23,52 @@ const GET_CURRENT_USER = gql`
 `;
 
 // --- RenderProps method ---
-class RepositoriesQuery extends Query<GetRepositories, void> {}
+// class RepositoriesQuery extends Query<GetRepositories, void> {}
 
-const Profile = () => (
-  <RepositoriesQuery query={GET_REPOSITORIES_OF_CURRENT_USER} notifyOnNetworkStatusChange={true}>
-    {({ data, loading, error, fetchMore }) => {
-      if (error) {
-        return <ErrorMessage error={error} />
-      }
-      
-      const { viewer } = data;
+const Profile = React.memo(function Profile() {
+  const { data, loading, error, fetchMore } = useQuery<
+    GetRepositories,
+    GetRepositoriesVariables
+  >(GET_REPOSITORIES_OF_CURRENT_USER, {
+    notifyOnNetworkStatusChange: true,
+  });
 
-      if (loading && !viewer) {return <Loading /> }
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
 
-      return <RepositoryList repositories={viewer.repositories} fetchMore={fetchMore} 
-            loading={loading} entry={'viewer'}/>
-    }}
-  </RepositoriesQuery>
-)
+  if (loading && !data) {
+    return <Loading />;
+  }
+
+  const { viewer } = data;
+
+  return (
+    <RepositoryList
+      repositories={viewer.repositories}
+      fetchMore={fetchMore}
+      loading={loading}
+      entry={"viewer"}
+    />
+  );
+});
+
+// const Profile = () => (
+// <RepositoriesQuery query={GET_REPOSITORIES_OF_CURRENT_USER} notifyOnNetworkStatusChange={true}>
+//   {({ data, loading, error, fetchMore }) => {
+//     if (error) {
+//       return <ErrorMessage error={error} />
+//     }
+
+//     const { viewer } = data;
+
+//     if (loading && !viewer) {return <Loading /> }
+
+//     return <RepositoryList repositories={viewer.repositories} fetchMore={fetchMore}
+//           loading={loading} entry={'viewer'}/>
+//   }}
+// </RepositoriesQuery>
+// )
 
 export default Profile;
 
@@ -43,7 +77,7 @@ export default Profile;
 //   if (error) {
 //     return <ErrorMessage error={error} />
 //   }
-  
+
 //   const { viewer } = data;
 
 //   if (loading || !viewer) { return <Loading /> }

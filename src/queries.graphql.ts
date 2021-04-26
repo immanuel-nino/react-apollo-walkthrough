@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import REPOSITORY_FRAGMENT from './Repository/fragments'
+import REPOSITORY_FRAGMENT from './Repository/fragments.graphql'
 
 // export const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 //   query GetRepositories($cursor: String) {
@@ -77,6 +77,30 @@ import REPOSITORY_FRAGMENT from './Repository/fragments'
 //   }
 // `;
 
+// export const REPOSITORY_FRAGMENT = gql`
+//   fragment repository on Repository {
+//     id
+//     name
+//     url
+//     descriptionHTML
+//     primaryLanguage {
+//       name
+//     }
+//     owner {
+//       login
+//       url
+//     }
+//     stargazers {
+//       totalCount
+//     }
+//     viewerHasStarred
+//     watchers {
+//       totalCount
+//     }
+//     viewerSubscription
+//   }
+// `;
+
 export const GET_ISSUES_OF_REPOSITORY = gql`
   query GetIssuesOfRepository(
     $repositoryOwner: String!,
@@ -103,7 +127,7 @@ export const GET_ISSUES_OF_REPOSITORY = gql`
 export const GET_REPOSITORIES_OF_ORGANIZATION = gql`
   query GetRepositoriesOfOrganization($organizationName: String!, $cursor: String) {
     organization(login: $organizationName) {
-      repositories(first: 100, after: $cursor) {
+      repositories(first: 3, after: $cursor) {
         edges {
           node {
             ...repository
@@ -121,7 +145,7 @@ export const GET_REPOSITORIES_OF_ORGANIZATION = gql`
 `;
 
 export const GET_REPOSITORIES_OF_CURRENT_USER = gql`
-  query($cursor: String) {
+  query GetRepositories($cursor: String) {
     viewer {
       repositories(
         first: 2
@@ -176,3 +200,13 @@ export const UPDATE_SUBSCRIPTION_REPOSITORY = gql`
     }
   }
 `;
+
+export const GET_REPOSITORIES = gql`
+  query OrganizationForLearningReact($orgName : String!) {
+    organization(login: $orgName) {
+      name
+      email
+    }
+  }
+`;
+

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './style.css';
-import { ApolloError } from 'apollo-client';
+import { ApolloError } from '@apollo/client';
 
 interface ErrorMessageProps {
   error: ApolloError
