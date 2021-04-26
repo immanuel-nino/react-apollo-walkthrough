@@ -6,7 +6,7 @@
     "build": "webpack --config webpack.config.js --mode development",
     "start": "webpack-dev-server --mode development",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "schema": "apollo schema:download ./src/schema.json --endpoint=https://api.github.com/graphql --header \"Authorization: Bearer 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\"",
+    "schema": "apollo schema:download ./src/schema.json --endpoint=https://api.github.com/graphql --header \"Authorization: Bearer sdasdasd",
     "types": "apollo codegen:generate ./src/__generated__/types.ts --addTypename --queries=./src/**/**.graphql.ts --localSchemaFile=./src/schema.json --target=typescript --outputFlat"
   },
   "dependencies": {
